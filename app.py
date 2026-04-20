@@ -410,7 +410,7 @@ with col_right:
     generate = st.button("⚡  GENERATE OFFENSIVE BLUEPRINT")
 
     if generate:
-        client = anthropic.Anthropic()
+        client = anthropic.Anthropic(api_key=st.secrets["anthropic"]["api_key"])
         scores = ARCHETYPE_SCORES[selected_qb]
         team_context = f"\nTeam context: {team_input}" if team_input else "\nNo specific team — generate a general blueprint."
 
