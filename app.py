@@ -450,7 +450,7 @@ Keep it sharp, specific, and football-intelligent. Write like a real OC memo, no
 
         with st.spinner("Generating blueprint..."):
             response = client.messages.create(
-                model="claude-sonnet-4-5,
+                model="claude-sonnet-4-5",
                 max_tokens=1200,
                 messages=[{"role": "user", "content": prompt}]
             )
