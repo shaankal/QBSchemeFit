@@ -13,170 +13,461 @@ st.set_page_config(
 # ── Custom CSS ────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-    --gold: #C9A84C;
-    --gold-light: #E8C96A;
-    --dark: #0A0A0A;
-    --surface: #141414;
-    --surface2: #1E1E1E;
-    --border: #2A2A2A;
-    --text: #F0EDE8;
-    --muted: #7A7A7A;
-    --green: #2ECC71;
+    --red: #D92B2B;
+    --red-dim: #7a1818;
+    --blue: #1A6FD9;
+    --gold: #F0B429;
+    --gold-dim: #7a5a14;
+    --dark: #080C10;
+    --navy: #0D1117;
+    --surface: #111820;
+    --surface2: #1A2232;
+    --surface3: #212D40;
+    --border: #1E2D42;
+    --border2: #2A3F5A;
+    --text: #E8EDF2;
+    --text2: #A8B8CC;
+    --muted: #5A7090;
+    --green: #00D46A;
+    --green-dim: #004d26;
+    --orange: #FF6B35;
 }
 
 html, body, [class*="css"] {
-    font-family: 'DM Sans', sans-serif;
+    font-family: 'Inter', sans-serif;
     background-color: var(--dark);
     color: var(--text);
 }
 
 .stApp { background-color: var(--dark); }
-
-/* Hide streamlit chrome */
 #MainMenu, footer, header { visibility: hidden; }
-.block-container { padding: 2rem 3rem; max-width: 1200px; }
+.block-container { padding: 0 !important; max-width: 100% !important; }
 
-/* Hero */
-.hero {
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 2rem;
-    margin-bottom: 2.5rem;
+/* ── TOP NAV BAR ── */
+.topbar {
+    background: var(--navy);
+    border-bottom: 3px solid var(--red);
+    padding: 0.75rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0;
 }
-.hero-eyebrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.25em;
-    color: var(--gold);
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-}
-.hero-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 4.5rem;
-    line-height: 0.95;
-    letter-spacing: 0.02em;
+.topbar-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
     color: var(--text);
-    margin: 0;
-}
-.hero-title span { color: var(--gold); }
-.hero-sub {
-    font-size: 0.95rem;
-    color: var(--muted);
-    margin-top: 0.75rem;
-    max-width: 520px;
-    line-height: 1.6;
-}
-
-/* QB Cards */
-.qb-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 1.25rem 1.5rem;
-    cursor: pointer;
-    transition: all 0.15s ease;
-    margin-bottom: 0.75rem;
-}
-.qb-card:hover { border-color: var(--gold); background: var(--surface2); }
-.qb-card.selected { border-color: var(--gold); background: var(--surface2); }
-.qb-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.04em; color: var(--text); }
-.qb-meta { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; margin-top: 0.15rem; }
-.qb-rank { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--gold); }
-
-/* Section label */
-.section-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    color: var(--gold);
     text-transform: uppercase;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--border);
 }
-
-/* Stat pill */
-.stat-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
-.stat-pill {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    padding: 0.4rem 0.75rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-}
-.stat-pill .val { color: var(--gold); font-weight: 500; }
-.stat-pill .lbl { color: var(--muted); font-size: 0.65rem; display: block; margin-top: 0.1rem; }
-
-/* Archetype badge */
-.archetype-badge {
-    display: inline-block;
-    background: linear-gradient(135deg, #1a1500, #2a2000);
-    border: 1px solid var(--gold);
-    border-radius: 2px;
-    padding: 0.4rem 1rem;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.1rem;
-    letter-spacing: 0.08em;
+.topbar-logo span { color: var(--red); }
+.topbar-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
     color: var(--gold);
+    background: rgba(240,180,41,0.1);
+    border: 1px solid rgba(240,180,41,0.3);
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    text-transform: uppercase;
+}
+
+/* ── TICKER BAR ── */
+.ticker {
+    background: var(--red);
+    padding: 0.35rem 2.5rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: #fff;
+    text-transform: uppercase;
+    display: flex;
+    gap: 2rem;
     margin-bottom: 1.5rem;
 }
+.ticker-item { opacity: 0.9; }
+.ticker-item span { opacity: 0.6; margin-right: 0.4rem; }
 
-/* Report output */
-.report-container {
+/* ── MAIN CONTENT ── */
+.main-wrap { padding: 0 2.5rem 2rem; }
+
+/* ── MODE TOGGLE ── */
+.mode-toggle {
+    display: flex;
+    gap: 0;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border2);
+    border-radius: 3px;
+    overflow: hidden;
+    width: fit-content;
+}
+.mode-btn {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.45rem 1.25rem;
+    background: var(--surface);
+    color: var(--muted);
+    border: none;
+    cursor: pointer;
+}
+.mode-btn.active {
+    background: var(--red);
+    color: #fff;
+}
+
+/* ── PANEL CARD ── */
+.panel {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 4px;
-    padding: 2rem;
+    overflow: hidden;
 }
-.report-container h3 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.3rem;
-    letter-spacing: 0.06em;
-    color: var(--gold);
-    margin-top: 1.5rem;
-    margin-bottom: 0.5rem;
+.panel-header {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    padding: 0.6rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
-.report-container p, .report-container li {
-    font-size: 0.9rem;
-    line-height: 1.7;
-    color: #C8C5BF;
+.panel-header-dot {
+    width: 8px; height: 8px;
+    background: var(--red);
+    border-radius: 50%;
 }
-.report-container ul { padding-left: 1.25rem; }
-.report-container li { margin-bottom: 0.3rem; }
+.panel-header-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--text2);
+    text-transform: uppercase;
+}
+.panel-body { padding: 1.25rem; }
 
-/* Generate button */
+/* ── QB LIST ITEMS ── */
+.qb-row {
+    display: flex;
+    align-items: center;
+    padding: 0.65rem 0.75rem;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background 0.1s;
+    border-left: 3px solid transparent;
+    margin-bottom: 2px;
+}
+.qb-row:hover { background: var(--surface2); }
+.qb-row.active { background: var(--surface2); border-left-color: var(--red); }
+.qb-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    width: 1.5rem;
+}
+.qb-info { flex: 1; }
+.qb-name-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: var(--text);
+    text-transform: uppercase;
+}
+.qb-school {
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 1px;
+}
+.qb-grade {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gold);
+}
+
+/* ── QB PROFILE HEADER ── */
+.qb-hero {
+    background: linear-gradient(135deg, var(--surface2) 0%, var(--surface3) 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 1.25rem;
+    position: relative;
+    overflow: hidden;
+}
+.qb-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--red), var(--blue));
+}
+.qb-hero-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    text-transform: uppercase;
+    line-height: 1;
+}
+.qb-hero-meta {
+    font-size: 0.75rem;
+    color: var(--text2);
+    margin-top: 0.3rem;
+}
+.qb-hero-rank {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--gold);
+    margin-top: 0.2rem;
+    letter-spacing: 0.05em;
+}
+
+/* ── STAT GRID ── */
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    margin-bottom: 1rem;
+}
+.stat-cell {
+    background: var(--surface);
+    padding: 0.75rem;
+    text-align: center;
+}
+.stat-cell .sv {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+}
+.stat-cell .sl {
+    font-size: 0.62rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 0.2rem;
+}
+
+/* ── ATTRIBUTE BARS ── */
+.attr-row { margin-bottom: 0.55rem; }
+.attr-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.68rem;
+    margin-bottom: 0.2rem;
+}
+.attr-label { color: var(--text2); font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; }
+.attr-val { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+.attr-track {
+    height: 4px;
+    background: var(--surface3);
+    border-radius: 2px;
+    overflow: hidden;
+}
+.attr-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.4s ease;
+}
+
+/* ── TAGS ── */
+.tag-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.75rem; }
+.tag {
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+.tag.strength { background: rgba(0,212,106,0.1); border: 1px solid rgba(0,212,106,0.25); color: var(--green); }
+.tag.weakness { background: rgba(217,43,43,0.1); border: 1px solid rgba(217,43,43,0.25); color: #ff6b6b; }
+
+/* ── ARCHETYPE BANNER ── */
+.archetype-banner {
+    background: linear-gradient(90deg, var(--red) 0%, #8B1A1A 100%);
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.archetype-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+}
+.archetype-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: #fff;
+    text-transform: uppercase;
+}
+.archetype-comp {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--gold);
+    text-align: right;
+}
+.archetype-comp-label { color: rgba(255,255,255,0.4); font-size: 0.55rem; display: block; }
+
+/* ── BLUEPRINT SECTIONS ── */
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.25rem;
+    background: var(--surface2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin-top: 1rem;
+}
+.section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--red);
+    font-weight: 600;
+}
+.section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--text2);
+    text-transform: uppercase;
+}
+
+/* ── GENERATE BUTTON ── */
 .stButton > button {
-    background: var(--gold) !important;
-    color: #000 !important;
-    font-family: 'Bebas Neue', sans-serif !important;
-    font-size: 1.1rem !important;
-    letter-spacing: 0.1em !important;
+    background: var(--red) !important;
+    color: #fff !important;
+    font-family: 'Barlow Condensed', sans-serif !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
     border: none !important;
-    border-radius: 2px !important;
-    padding: 0.6rem 2rem !important;
+    border-radius: 3px !important;
+    padding: 0.7rem 2rem !important;
     width: 100% !important;
     transition: all 0.15s ease !important;
 }
-.stButton > button:hover { background: var(--gold-light) !important; }
+.stButton > button:hover { opacity: 0.88 !important; }
+.stButton > button:disabled { background: var(--surface3) !important; color: var(--muted) !important; }
 
-/* Divider */
-.divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
-
-/* Strength/weakness tags */
-.tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
-.tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.68rem;
-    padding: 0.25rem 0.6rem;
-    border-radius: 2px;
-    letter-spacing: 0.05em;
+/* ── INPUT ── */
+.stTextInput > div > div > input {
+    background: var(--surface2) !important;
+    border: 1px solid var(--border2) !important;
+    color: var(--text) !important;
+    border-radius: 3px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.875rem !important;
 }
-.tag.strength { background: #0d2b1a; border: 1px solid #1a4a2e; color: var(--green); }
-.tag.weakness { background: #2b0d0d; border: 1px solid #4a1a1a; color: #e74c3c; }
+.stTextInput > div > div > input:focus {
+    border-color: var(--red) !important;
+    box-shadow: 0 0 0 1px var(--red) !important;
+}
+.stTextInput label { color: var(--text2) !important; font-size: 0.75rem !important; font-weight: 600 !important; letter-spacing: 0.05em !important; text-transform: uppercase !important; }
+
+/* ── RADIO (hide default, use custom) ── */
+.stRadio > div { display: none !important; }
+
+/* ── REPORT ── */
+.report-body {
+    padding: 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.75;
+    color: var(--text2);
+}
+.report-body h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-top: 1.25rem;
+    margin-bottom: 0.4rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--border);
+}
+.report-body ul { padding-left: 1.2rem; }
+.report-body li { margin-bottom: 0.4rem; color: var(--text2); }
+.report-body p { color: var(--text2); }
+.report-body strong { color: var(--text); }
+
+/* ── EMPTY STATE ── */
+.empty-state {
+    padding: 3rem 1.5rem;
+    text-align: center;
+    border: 1px dashed var(--border2);
+    border-radius: 4px;
+    margin: 1rem 0;
+}
+.empty-icon { font-size: 2rem; margin-bottom: 0.75rem; opacity: 0.4; }
+.empty-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+}
+.empty-sub { font-size: 0.8rem; color: var(--muted); margin-top: 0.3rem; opacity: 0.7; }
+
+/* ── DIVIDER ── */
+.divider { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
+
+/* ── STREAMLIT RADIO OVERRIDE for mode toggle ── */
+div[data-testid="stRadio"] > label { display: none !important; }
+div[data-testid="stRadio"] > div {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 0 !important;
+    background: var(--surface2) !important;
+    border: 1px solid var(--border2) !important;
+    border-radius: 3px !important;
+    overflow: hidden !important;
+    width: fit-content !important;
+    padding: 0 !important;
+}
+div[data-testid="stRadio"] > div > label {
+    display: flex !important;
+    align-items: center !important;
+    padding: 0.45rem 1.1rem !important;
+    font-family: 'Barlow Condensed', sans-serif !important;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    cursor: pointer !important;
+    border-radius: 0 !important;
+    color: var(--muted) !important;
+    transition: all 0.1s !important;
+    margin: 0 !important;
+}
+div[data-testid="stRadio"] > div > label:has(input:checked) {
+    background: var(--red) !important;
+    color: #fff !important;
+}
+div[data-testid="stRadio"] > div > label > div:first-child { display: none !important; }
+div[data-testid="stRadio"] > div > label > div { color: inherit !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -320,31 +611,99 @@ ARCHETYPE_SCORES = {
     "Carson Beck":       {"pocket_iq": 65, "arm_talent": 95, "mobility": 52, "game_mgmt": 68, "deep_ball": 95},
 }
 
+
+def render_qb_profile(name, qb_data, scores_data):
+    """Render QB profile card with ESPN dashboard style."""
+    # Hero header
+    st.markdown(f"""
+    <div class="qb-hero">
+        <div class="qb-hero-name">{name}</div>
+        <div class="qb-hero-meta">{qb_data.get('school','—')} · {qb_data.get('height','—')} · {qb_data.get('weight','—')}</div>
+        <div class="qb-hero-rank">{qb_data.get('rank','—')}</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Stat grid
+    stats = qb_data.get('stats', {})
+    items = list(stats.items())
+    # pad to multiple of 3
+    while len(items) % 3 != 0:
+        items.append(('', ''))
+    grid_html = '<div class="stat-grid">'
+    for k, v in items:
+        if k:
+            grid_html += f'<div class="stat-cell"><div class="sv">{v}</div><div class="sl">{k}</div></div>'
+        else:
+            grid_html += '<div class="stat-cell"></div>'
+    grid_html += '</div>'
+    st.markdown(grid_html, unsafe_allow_html=True)
+
+    # Strengths
+    st.markdown('<div style="font-size:0.65rem;font-weight:600;letter-spacing:0.1em;color:var(--text2);text-transform:uppercase;margin-bottom:0.4rem">Strengths</div>', unsafe_allow_html=True)
+    tags = "".join([f'<span class="tag strength">{s}</span>' for s in qb_data.get("strengths", [])])
+    st.markdown(f'<div class="tag-row">{tags}</div>', unsafe_allow_html=True)
+
+    # Concerns
+    st.markdown('<div style="font-size:0.65rem;font-weight:600;letter-spacing:0.1em;color:var(--text2);text-transform:uppercase;margin-bottom:0.4rem">Concerns</div>', unsafe_allow_html=True)
+    wtags = "".join([f'<span class="tag weakness">{w}</span>' for w in qb_data.get("weaknesses", [])])
+    st.markdown(f'<div class="tag-row">{wtags}</div>', unsafe_allow_html=True)
+
+    st.markdown('<hr class="divider">', unsafe_allow_html=True)
+
+    # Attribute bars with color coding
+    attr_colors = {
+        "pocket_iq": "#1A6FD9",
+        "arm_talent": "#D92B2B",
+        "mobility": "#00D46A",
+        "game_mgmt": "#F0B429",
+        "deep_ball": "#FF6B35",
+    }
+    attr_labels = {
+        "pocket_iq": "Pocket IQ",
+        "arm_talent": "Arm Talent",
+        "mobility": "Mobility",
+        "game_mgmt": "Game Mgmt",
+        "deep_ball": "Deep Ball",
+    }
+    for attr, val in scores_data.items():
+        color = attr_colors.get(attr, "#D92B2B")
+        label = attr_labels.get(attr, attr.replace("_"," ").title())
+        st.markdown(f"""
+        <div class="attr-row">
+            <div class="attr-header">
+                <span class="attr-label">{label}</span>
+                <span class="attr-val" style="color:{color}">{val}</span>
+            </div>
+            <div class="attr-track">
+                <div class="attr-fill" style="width:{val}%;background:{color}"></div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+
 # ── App Layout ────────────────────────────────────────────────────────────────
+
+# Top nav bar
 st.markdown("""
-<div class="hero">
-    <div class="hero-eyebrow">2026 NFL Draft · Offensive Intelligence Engine</div>
-    <div class="hero-title">QB<span> SCHEME</span><br>FIT</div>
-    <div class="hero-sub">Select a quarterback prospect. Get a full offensive blueprint — archetype classification, scheme fit, play concepts, and supporting cast recommendations.</div>
+<div class="topbar">
+    <div class="topbar-logo">QB<span>SCHEME</span>FIT</div>
+    <div style="display:flex;align-items:center;gap:1rem">
+        <span class="topbar-badge">2026 NFL Draft</span>
+        <span class="topbar-badge" style="color:var(--text2);background:var(--surface2);border-color:var(--border2)">Offensive Intelligence Engine</span>
+    </div>
 </div>
+<div class="ticker">
+    <span class="ticker-item"><span>#</span>1 OVERALL — FERNANDO MENDOZA · INDIANA</span>
+    <span class="ticker-item"><span>#</span>2 QB — TY SIMPSON · ALABAMA</span>
+    <span class="ticker-item"><span>#</span>3 QB — GARRETT NUSSMEIER · LSU</span>
+    <span class="ticker-item"><span>#</span>4 QB — DREW ALLAR · PENN STATE</span>
+    <span class="ticker-item"><span>#</span>5 QB — CARSON BECK · MIAMI</span>
+</div>
+<div class="main-wrap">
 """, unsafe_allow_html=True)
 
-# ── Mode Toggle ───────────────────────────────────────────────────────────────
-st.markdown("""
-<style>
-div[data-testid="stHorizontalBlock"] > div:first-child { padding-right: 0.5rem; }
-.mode-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    color: var(--muted);
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-}
-</style>
-""", unsafe_allow_html=True)
-
-mode_col, _ = st.columns([2, 3])
+# Mode Toggle
+mode_col, _ = st.columns([2, 4])
 with mode_col:
     mode = st.radio(
         "Mode",
@@ -353,9 +712,8 @@ with mode_col:
         label_visibility="collapsed",
     )
 
-st.markdown('<hr class="divider">', unsafe_allow_html=True)
-
-col_left, col_right = st.columns([1, 1.8], gap="large")
+st.markdown("<div style='margin-bottom:1rem'></div>", unsafe_allow_html=True)
+col_left, col_right = st.columns([1, 1.8], gap="medium")
 
 # ── Shared state ──────────────────────────────────────────────────────────────
 qb_profile = {}        # populated below regardless of mode
@@ -376,45 +734,10 @@ with col_left:
         qb_profile = qb
         scores = ARCHETYPE_SCORES[selected_qb]
 
-        st.markdown('<hr class="divider">', unsafe_allow_html=True)
-        st.markdown('<div class="section-label">Scouting Profile</div>', unsafe_allow_html=True)
-
-        st.markdown(f"""
-        <div style="margin-bottom:1rem">
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:0.04em">{selected_qb}</div>
-            <div style="font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);letter-spacing:0.1em">{qb['school']} · {qb['height']} · {qb['weight']}</div>
-            <div style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--gold);margin-top:0.25rem">{qb['rank']}</div>
-        </div>
-        """, unsafe_allow_html=True)
-
-        stats_html = '<div class="stat-row">'
-        for k, v in qb["stats"].items():
-            stats_html += f'<div class="stat-pill"><span class="val">{v}</span><span class="lbl">{k}</span></div>'
-        stats_html += '</div>'
-        st.markdown(stats_html, unsafe_allow_html=True)
-
-        st.markdown('<div style="font-family:\'DM Mono\',monospace;font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;margin-bottom:0.4rem">STRENGTHS</div>', unsafe_allow_html=True)
-        tags = "".join([f'<span class="tag strength">+ {s}</span>' for s in qb["strengths"]])
-        st.markdown(f'<div class="tag-row">{tags}</div>', unsafe_allow_html=True)
-
-        st.markdown('<div style="font-family:\'DM Mono\',monospace;font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;margin-bottom:0.4rem">CONCERNS</div>', unsafe_allow_html=True)
-        wtags = "".join([f'<span class="tag weakness">— {w}</span>' for w in qb["weaknesses"]])
-        st.markdown(f'<div class="tag-row">{wtags}</div>', unsafe_allow_html=True)
-
-        st.markdown('<hr class="divider">', unsafe_allow_html=True)
-        st.markdown('<div class="section-label">Attribute Scores</div>', unsafe_allow_html=True)
-        for attr, val in scores.items():
-            label = attr.replace("_", " ").upper()
-            st.markdown(f"""
-            <div style="margin-bottom:0.6rem">
-                <div style="display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);margin-bottom:0.2rem">
-                    <span>{label}</span><span style="color:var(--gold)">{val}</span>
-                </div>
-                <div style="background:var(--surface2);border-radius:1px;height:3px">
-                    <div style="background:var(--gold);width:{val}%;height:3px;border-radius:1px"></div>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+        st.markdown("<div style='margin-top:1rem'></div>", unsafe_allow_html=True)
+        st.markdown('<div class="panel">', unsafe_allow_html=True)
+        render_qb_profile(selected_qb, qb, scores)
+        st.markdown('</div>', unsafe_allow_html=True)
 
     # ── PHASE 2: Any NFL QB ───────────────────────────────────────────────────
     else:
@@ -505,42 +828,9 @@ Return ONLY a JSON object with this exact structure, no other text:
                     "game_mgmt": 70, "deep_ball": 70
                 })
 
-                st.markdown(f"""
-                <div style="margin-bottom:1rem">
-                    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:0.04em">{selected_qb}</div>
-                    <div style="font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);letter-spacing:0.1em">{qb_profile['school']} · {qb_profile['height']} · {qb_profile['weight']}</div>
-                    <div style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--gold);margin-top:0.25rem">{qb_profile['rank']}</div>
-                </div>
-                """, unsafe_allow_html=True)
-
-                stats_html = '<div class="stat-row">'
-                for k, v in qb_profile["stats"].items():
-                    stats_html += f'<div class="stat-pill"><span class="val">{v}</span><span class="lbl">{k}</span></div>'
-                stats_html += '</div>'
-                st.markdown(stats_html, unsafe_allow_html=True)
-
-                st.markdown('<div style="font-family:\'DM Mono\',monospace;font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;margin-bottom:0.4rem">STRENGTHS</div>', unsafe_allow_html=True)
-                tags = "".join([f'<span class="tag strength">+ {s}</span>' for s in qb_profile["strengths"]])
-                st.markdown(f'<div class="tag-row">{tags}</div>', unsafe_allow_html=True)
-
-                st.markdown('<div style="font-family:\'DM Mono\',monospace;font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;margin-bottom:0.4rem">CONCERNS</div>', unsafe_allow_html=True)
-                wtags = "".join([f'<span class="tag weakness">— {w}</span>' for w in qb_profile["weaknesses"]])
-                st.markdown(f'<div class="tag-row">{wtags}</div>', unsafe_allow_html=True)
-
-                st.markdown('<hr class="divider">', unsafe_allow_html=True)
-                st.markdown('<div class="section-label">Attribute Scores</div>', unsafe_allow_html=True)
-                for attr, val in scores.items():
-                    label = attr.replace("_", " ").upper()
-                    st.markdown(f"""
-                    <div style="margin-bottom:0.6rem">
-                        <div style="display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);margin-bottom:0.2rem">
-                            <span>{label}</span><span style="color:var(--gold)">{val}</span>
-                        </div>
-                        <div style="background:var(--surface2);border-radius:1px;height:3px">
-                            <div style="background:var(--gold);width:{val}%;height:3px;border-radius:1px"></div>
-                        </div>
-                    </div>
-                    """, unsafe_allow_html=True)
+                st.markdown('<div class="panel">', unsafe_allow_html=True)
+                render_qb_profile(selected_qb, qb_profile, scores)
+                st.markdown('</div>', unsafe_allow_html=True)
             else:
                 st.warning(f"Couldn't pull profile for '{selected_qb}'. Check the name and try again.")
         else:
@@ -552,24 +842,31 @@ Return ONLY a JSON object with this exact structure, no other text:
             """, unsafe_allow_html=True)
 
 with col_right:
-    st.markdown('<div class="section-label">Offensive Blueprint Generator</div>', unsafe_allow_html=True)
-
     if qb_profile:
         archetype = qb_profile.get('archetype', '—')
         profile_text = qb_profile.get('profile', '').strip()
         comp = qb_profile.get('comp', '—')
         st.markdown(f"""
-        <div style="margin-bottom:1.5rem">
-            <div style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);margin-bottom:0.4rem">CLASSIFIED ARCHETYPE</div>
-            <div class="archetype-badge">{archetype}</div>
-            <div style="font-size:0.85rem;color:var(--muted);line-height:1.6">{profile_text}</div>
-            <div style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--gold);margin-top:0.75rem">CLOSEST NFL COMP: {comp}</div>
+        <div class="archetype-banner">
+            <div>
+                <div class="archetype-label">Classified Archetype</div>
+                <div class="archetype-name">{archetype}</div>
+            </div>
+            <div class="archetype-comp">
+                <span class="archetype-comp-label">NFL Comp</span>
+                {comp}
+            </div>
         </div>
+        <div style="font-size:0.85rem;color:var(--text2);line-height:1.7;margin-bottom:1.25rem;padding:0 0.25rem">{profile_text}</div>
         """, unsafe_allow_html=True)
     else:
-        st.markdown('<div style="font-family:\'DM Mono\',monospace;font-size:0.7rem;color:var(--muted);margin-bottom:1.5rem">Enter a QB name on the left to load their profile.</div>', unsafe_allow_html=True)
-
-    st.markdown('<hr class="divider">', unsafe_allow_html=True)
+        st.markdown("""
+        <div class="empty-state">
+            <div class="empty-icon">🏈</div>
+            <div class="empty-title">Select a Quarterback</div>
+            <div class="empty-sub">Choose a prospect from the left panel</div>
+        </div>
+        """, unsafe_allow_html=True)
 
     team_input = st.text_input(
         "NFL Team (optional)",
@@ -678,12 +975,15 @@ Write like a real OC memo. Be brutally specific. Name real players. No generic s
             )
             blueprint = response.content[0].text
 
-        st.markdown(f'<div class="report-container">{blueprint}</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="panel"><div class="panel-header"><div class="panel-header-dot"></div><div class="panel-header-title">Offensive Blueprint · {selected_qb}</div></div><div class="report-body">{blueprint}</div></div>', unsafe_allow_html=True)
 
     else:
         st.markdown("""
-        <div style="background:var(--surface);border:1px dashed var(--border);border-radius:4px;padding:3rem 2rem;text-align:center">
-            <div style="font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);letter-spacing:0.15em">SELECT A QB AND HIT GENERATE</div>
-            <div style="font-size:0.85rem;color:#444;margin-top:0.5rem">The blueprint will appear here</div>
+        <div class="empty-state" style="margin-top:1rem">
+            <div class="empty-icon">📋</div>
+            <div class="empty-title">Blueprint Ready to Generate</div>
+            <div class="empty-sub">Select a QB, optionally enter an NFL team, and hit Generate</div>
         </div>
         """, unsafe_allow_html=True)
+
+st.markdown('</div>', unsafe_allow_html=True)  # close main-wrap
