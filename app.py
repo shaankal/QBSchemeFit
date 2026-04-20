@@ -1,7 +1,7 @@
 import streamlit as st
 import anthropic
 import json
-
+ 
 # ── Page config ──────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="QB Scheme Fit",
@@ -9,12 +9,12 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="collapsed",
 )
-
+ 
 # ── Custom CSS ────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
-
+ 
 :root {
     --gold: #C9A84C;
     --gold-light: #E8C96A;
@@ -26,19 +26,19 @@ st.markdown("""
     --muted: #7A7A7A;
     --green: #2ECC71;
 }
-
+ 
 html, body, [class*="css"] {
     font-family: 'DM Sans', sans-serif;
     background-color: var(--dark);
     color: var(--text);
 }
-
+ 
 .stApp { background-color: var(--dark); }
-
+ 
 /* Hide streamlit chrome */
 #MainMenu, footer, header { visibility: hidden; }
 .block-container { padding: 2rem 3rem; max-width: 1200px; }
-
+ 
 /* Hero */
 .hero {
     border-bottom: 1px solid var(--border);
@@ -69,7 +69,7 @@ html, body, [class*="css"] {
     max-width: 520px;
     line-height: 1.6;
 }
-
+ 
 /* QB Cards */
 .qb-card {
     background: var(--surface);
@@ -85,7 +85,7 @@ html, body, [class*="css"] {
 .qb-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.04em; color: var(--text); }
 .qb-meta { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; margin-top: 0.15rem; }
 .qb-rank { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: var(--gold); }
-
+ 
 /* Section label */
 .section-label {
     font-family: 'DM Mono', monospace;
@@ -97,7 +97,7 @@ html, body, [class*="css"] {
     padding-bottom: 0.5rem;
     border-bottom: 1px solid var(--border);
 }
-
+ 
 /* Stat pill */
 .stat-row { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
 .stat-pill {
@@ -110,7 +110,7 @@ html, body, [class*="css"] {
 }
 .stat-pill .val { color: var(--gold); font-weight: 500; }
 .stat-pill .lbl { color: var(--muted); font-size: 0.65rem; display: block; margin-top: 0.1rem; }
-
+ 
 /* Archetype badge */
 .archetype-badge {
     display: inline-block;
@@ -124,7 +124,7 @@ html, body, [class*="css"] {
     color: var(--gold);
     margin-bottom: 1.5rem;
 }
-
+ 
 /* Report output */
 .report-container {
     background: var(--surface);
@@ -147,7 +147,7 @@ html, body, [class*="css"] {
 }
 .report-container ul { padding-left: 1.25rem; }
 .report-container li { margin-bottom: 0.3rem; }
-
+ 
 /* Generate button */
 .stButton > button {
     background: var(--gold) !important;
@@ -162,10 +162,10 @@ html, body, [class*="css"] {
     transition: all 0.15s ease !important;
 }
 .stButton > button:hover { background: var(--gold-light) !important; }
-
+ 
 /* Divider */
 .divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
-
+ 
 /* Strength/weakness tags */
 .tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
 .tag {
@@ -179,7 +179,7 @@ html, body, [class*="css"] {
 .tag.weakness { background: #2b0d0d; border: 1px solid #4a1a1a; color: #e74c3c; }
 </style>
 """, unsafe_allow_html=True)
-
+ 
 # ── QB Data ───────────────────────────────────────────────────────────────────
 QBS = {
     "Fernando Mendoza": {
@@ -310,7 +310,7 @@ heavy, downfield offenses will covet him as a developmental piece.
 """
     },
 }
-
+ 
 # ── Classify archetype scores ─────────────────────────────────────────────────
 ARCHETYPE_SCORES = {
     "Fernando Mendoza":  {"pocket_iq": 95, "arm_talent": 78, "mobility": 60, "game_mgmt": 92, "deep_ball": 72},
@@ -319,7 +319,7 @@ ARCHETYPE_SCORES = {
     "Drew Allar":        {"pocket_iq": 70, "arm_talent": 78, "mobility": 78, "game_mgmt": 68, "deep_ball": 72},
     "Carson Beck":       {"pocket_iq": 65, "arm_talent": 95, "mobility": 52, "game_mgmt": 68, "deep_ball": 95},
 }
-
+ 
 # ── App Layout ────────────────────────────────────────────────────────────────
 st.markdown("""
 <div class="hero">
@@ -328,9 +328,9 @@ st.markdown("""
     <div class="hero-sub">Select a quarterback prospect. Get a full offensive blueprint — archetype classification, scheme fit, play concepts, and supporting cast recommendations.</div>
 </div>
 """, unsafe_allow_html=True)
-
+ 
 col_left, col_right = st.columns([1, 1.8], gap="large")
-
+ 
 with col_left:
     st.markdown('<div class="section-label">2026 QB Class</div>', unsafe_allow_html=True)
     selected_qb = st.radio(
@@ -339,12 +339,12 @@ with col_left:
         label_visibility="collapsed",
         format_func=lambda x: x,
     )
-
+ 
     qb = QBS[selected_qb]
-
+ 
     st.markdown('<hr class="divider">', unsafe_allow_html=True)
     st.markdown('<div class="section-label">Scouting Profile</div>', unsafe_allow_html=True)
-
+ 
     st.markdown(f"""
     <div style="margin-bottom:1rem">
         <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:0.04em">{selected_qb}</div>
@@ -352,24 +352,24 @@ with col_left:
         <div style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--gold);margin-top:0.25rem">{qb['rank']}</div>
     </div>
     """, unsafe_allow_html=True)
-
+ 
     # Stats
     stats_html = '<div class="stat-row">'
     for k, v in qb["stats"].items():
         stats_html += f'<div class="stat-pill"><span class="val">{v}</span><span class="lbl">{k}</span></div>'
     stats_html += '</div>'
     st.markdown(stats_html, unsafe_allow_html=True)
-
+ 
     # Strengths
     st.markdown('<div style="font-family:\'DM Mono\',monospace;font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;margin-bottom:0.4rem">STRENGTHS</div>', unsafe_allow_html=True)
     tags = "".join([f'<span class="tag strength">+ {s}</span>' for s in qb["strengths"]])
     st.markdown(f'<div class="tag-row">{tags}</div>', unsafe_allow_html=True)
-
+ 
     # Weaknesses
     st.markdown('<div style="font-family:\'DM Mono\',monospace;font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;margin-bottom:0.4rem">CONCERNS</div>', unsafe_allow_html=True)
     wtags = "".join([f'<span class="tag weakness">— {w}</span>' for w in qb["weaknesses"]])
     st.markdown(f'<div class="tag-row">{wtags}</div>', unsafe_allow_html=True)
-
+ 
     # Radar scores
     st.markdown('<hr class="divider">', unsafe_allow_html=True)
     st.markdown('<div class="section-label">Attribute Scores</div>', unsafe_allow_html=True)
@@ -386,10 +386,10 @@ with col_left:
             </div>
         </div>
         """, unsafe_allow_html=True)
-
+ 
 with col_right:
     st.markdown('<div class="section-label">Offensive Blueprint Generator</div>', unsafe_allow_html=True)
-
+ 
     st.markdown(f"""
     <div style="margin-bottom:1.5rem">
         <div style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--muted);margin-bottom:0.4rem">CLASSIFIED ARCHETYPE</div>
@@ -398,24 +398,71 @@ with col_right:
         <div style="font-family:'DM Mono',monospace;font-size:0.65rem;color:var(--gold);margin-top:0.75rem">CLOSEST NFL COMP: {qb['comp']}</div>
     </div>
     """, unsafe_allow_html=True)
-
+ 
     st.markdown('<hr class="divider">', unsafe_allow_html=True)
-
+ 
     team_input = st.text_input(
-        "NFL Team Context (optional)",
-        placeholder="e.g. Green Bay Packers — Jordan Love just released",
-        help="Add team context to make the blueprint more specific"
+        "NFL Team (optional)",
+        placeholder="e.g. Green Bay Packers",
+        help="Enter an NFL team to get a roster-specific blueprint"
     )
-
+ 
     generate = st.button("⚡  GENERATE OFFENSIVE BLUEPRINT")
-
+ 
     if generate:
         client = anthropic.Anthropic(api_key=st.secrets["anthropic"]["api_key"])
         scores = ARCHETYPE_SCORES[selected_qb]
-        team_context = f"\nTeam context: {team_input}" if team_input else "\nNo specific team — generate a general blueprint."
-
-        prompt = f"""You are an NFL offensive coordinator and analytics consultant. Generate a full offensive blueprint for this quarterback prospect.
-
+ 
+        # ── Step 1: Pull live team intel via web search ──────────────────────
+        team_intel = ""
+        if team_input.strip():
+            with st.spinner(f"Scouting {team_input} roster & scheme..."):
+                search_prompt = f"""Search for and compile a comprehensive 2026 NFL season profile of the {team_input}. Include:
+- Current offensive roster: starting QB situation, WRs, TEs, RBs, OL starters
+- Offensive coordinator and their scheme tendencies
+- Head coach philosophy
+- 2026 offseason moves (free agency signings, cuts, trades)
+- 2026 draft picks and needs
+- Salary cap situation and roster construction priorities
+- Recent offensive performance and weaknesses
+- Any injuries to key offensive players
+ 
+Be specific with player names, positions, and contract situations. This is for a front office offensive blueprint tool."""
+ 
+                search_response = client.messages.create(
+                    model="claude-sonnet-4-5",
+                    max_tokens=1500,
+                    tools=[{"type": "web_search_20250305", "name": "web_search"}],
+                    messages=[{"role": "user", "content": search_prompt}]
+                )
+ 
+                # Extract text from response
+                for block in search_response.content:
+                    if hasattr(block, "text"):
+                        team_intel += block.text
+ 
+        # ── Step 2: Generate blueprint with full team context ─────────────────
+        if team_input.strip() and team_intel:
+            team_section = f"""
+TEAM: {team_input}
+CURRENT TEAM INTELLIGENCE (2026):
+{team_intel}
+ 
+CRITICAL INSTRUCTION: This blueprint must be hyper-specific to the {team_input}.
+- Reference actual players on their roster by name at every opportunity
+- Call out specific roster holes that this QB would need filled
+- Reference the actual OC/HC and their real scheme
+- Compare what this QB offers vs. their current QB situation
+- Name specific players already on the roster who fit or don't fit this QB's needs
+- Address their actual cap situation and draft capital
+- This should read like an internal front office memo written specifically for {team_input} decision-makers
+"""
+        else:
+            team_section = "\nNo specific team — generate a general blueprint applicable to any team."
+ 
+        prompt = f"""You are a senior NFL offensive coordinator and analytics consultant writing an internal front office memo.
+ 
+QB PROSPECT PROFILE:
 QB: {selected_qb}
 School: {qb['school']}
 Archetype: {qb['archetype']}
@@ -423,41 +470,46 @@ NFL Comp: {qb['comp']}
 Strengths: {', '.join(qb['strengths'])}
 Concerns: {', '.join(qb['weaknesses'])}
 Attribute Scores (out of 100): Pocket IQ {scores['pocket_iq']}, Arm Talent {scores['arm_talent']}, Mobility {scores['mobility']}, Game Management {scores['game_mgmt']}, Deep Ball {scores['deep_ball']}
-Profile: {qb['profile'].strip()}
-{team_context}
-
+Scouting Profile: {qb['profile'].strip()}
+ 
+{team_section}
+ 
 Generate a detailed offensive blueprint with these exact sections:
-
+ 
 ### OFFENSIVE SYSTEM FIT
-2-3 sentences on what offensive system/philosophy fits this QB and why. Be specific — name real NFL schemes (West Coast, Air Raid, McVay-style play-action, Andy Reid RPO, etc).
-
+2-3 sentences on what offensive system fits this QB. If a team is provided, explain specifically why it does or doesn't match what {team_input if team_input else 'this team'} currently runs under their OC.
+ 
+### ROSTER FIT ANALYSIS
+If a team is provided: Go position-by-position through their current roster. For each position group (OL, WR, TE, RB), name the actual players and rate how well they fit this QB's needs. Be brutally honest. If a team is not provided, describe the ideal roster profile.
+ 
 ### SCHEME PRINCIPLES
-3-4 bullet points on the core schematic principles the offense should be built around for this QB.
-
+3-4 bullet points on core schematic principles for this QB. If team provided, tie each principle to how it fits or conflicts with the current coaching staff's tendencies.
+ 
 ### SIGNATURE PLAY CONCEPTS
-4-5 specific play concepts or route combinations that maximize this QB's strengths. Name real concepts (mesh concept, sail route, Y-cross, pin-and-pull run game, etc). One sentence each explaining why it fits.
-
-### IDEAL SUPPORTING CAST
-What type of players does this QB need around him to reach his ceiling? Cover: OL type, WR1 profile, TE usage, RB scheme. Be specific and reference real player comparisons where helpful.
-
-### YEAR 1 RECOMMENDATION
-One paragraph on what the team should do in Year 1 — what to run, what to protect him from, and what the realistic ceiling looks like if the scheme fits.
-
-### RED FLAGS FOR TEAMS
-2-3 bullet points on what offensive situations or team contexts would be a bad fit for this QB.
-
-Keep it sharp, specific, and football-intelligent. Write like a real OC memo, not a generic summary."""
-
-        with st.spinner("Generating blueprint..."):
+4-5 specific play concepts that maximize this QB's strengths. Name real concepts (mesh, sail, Y-cross, etc). If team provided, explain how each concept fits the personnel already on the roster.
+ 
+### OFFSEASON PRIORITIES
+If team provided: What specific moves must {team_input if team_input else 'the team'} make to maximize this QB? Name position needs, ideal player profiles, and whether to address via draft or free agency given their cap situation.
+If no team: General supporting cast recommendations.
+ 
+### YEAR 1 PROJECTION
+One paragraph on realistic Year 1 expectations — stat projections, scheme ramp-up, ceiling if everything goes right. If team provided, account for their actual schedule difficulty, division, and supporting cast.
+ 
+### RED FLAGS
+2-3 bullet points on what would make this a failed fit — either generally or specific to this team's situation.
+ 
+Write like a real OC memo. Be brutally specific. Name real players. No generic statements."""
+ 
+        with st.spinner("Building offensive blueprint..."):
             response = client.messages.create(
                 model="claude-sonnet-4-5",
-                max_tokens=1200,
+                max_tokens=2000,
                 messages=[{"role": "user", "content": prompt}]
             )
             blueprint = response.content[0].text
-
+ 
         st.markdown(f'<div class="report-container">{blueprint}</div>', unsafe_allow_html=True)
-
+ 
     else:
         st.markdown("""
         <div style="background:var(--surface);border:1px dashed var(--border);border-radius:4px;padding:3rem 2rem;text-align:center">
@@ -465,3 +517,4 @@ Keep it sharp, specific, and football-intelligent. Write like a real OC memo, no
             <div style="font-size:0.85rem;color:#444;margin-top:0.5rem">The blueprint will appear here</div>
         </div>
         """, unsafe_allow_html=True)
+ 
