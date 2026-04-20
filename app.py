@@ -13,222 +13,195 @@ st.set_page_config(
 # ── Custom CSS ────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap');
 
 :root {
-    --red: #D92B2B;
-    --red-dim: #7a1818;
-    --blue: #1A6FD9;
-    --gold: #F0B429;
-    --gold-dim: #7a5a14;
-    --dark: #080C10;
-    --navy: #0D1117;
-    --surface: #111820;
-    --surface2: #1A2232;
-    --surface3: #212D40;
-    --border: #1E2D42;
-    --border2: #2A3F5A;
-    --text: #E8EDF2;
-    --text2: #A8B8CC;
-    --muted: #5A7090;
-    --green: #00D46A;
-    --green-dim: #004d26;
-    --orange: #FF6B35;
+    --accent: #4A9EFF;
+    --accent-dim: rgba(74,158,255,0.12);
+    --warn: #F5A623;
+    --warn-dim: rgba(245,166,35,0.12);
+    --ok: #2ECC71;
+    --ok-dim: rgba(46,204,113,0.12);
+    --danger: #E74C3C;
+    --danger-dim: rgba(231,76,60,0.12);
+    --bg: #0E1117;
+    --bg2: #161B24;
+    --bg3: #1C2333;
+    --bg4: #222B3A;
+    --line: #2A3447;
+    --line2: #344156;
+    --text: #E2E8F0;
+    --text2: #94A3B8;
+    --text3: #64748B;
+    --white: #F8FAFC;
 }
 
 html, body, [class*="css"] {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--dark);
+    font-family: 'IBM Plex Sans', sans-serif;
+    background-color: var(--bg);
     color: var(--text);
 }
-
-.stApp { background-color: var(--dark); }
+.stApp { background-color: var(--bg); }
 #MainMenu, footer, header { visibility: hidden; }
 .block-container { padding: 0 !important; max-width: 100% !important; }
 
-/* ── TOP NAV BAR ── */
+/* ── TOPBAR ── */
 .topbar {
-    background: var(--navy);
-    border-bottom: 3px solid var(--red);
-    padding: 0.75rem 2.5rem;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--line);
+    padding: 0.6rem 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 0;
 }
 .topbar-logo {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 800;
-    letter-spacing: 0.06em;
-    color: var(--text);
-    text-transform: uppercase;
-}
-.topbar-logo span { color: var(--red); }
-.topbar-badge {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    color: var(--gold);
-    background: rgba(240,180,41,0.1);
-    border: 1px solid rgba(240,180,41,0.3);
-    padding: 0.2rem 0.6rem;
-    border-radius: 2px;
-    text-transform: uppercase;
-}
-
-/* ── TICKER BAR ── */
-.ticker {
-    background: var(--red);
-    padding: 0.35rem 2.5rem;
-    font-family: 'Barlow Condensed', sans-serif;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 0.85rem;
     font-weight: 600;
-    letter-spacing: 0.08em;
-    color: #fff;
+    letter-spacing: 0.12em;
+    color: var(--white);
     text-transform: uppercase;
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 1.5rem;
 }
-.ticker-item { opacity: 0.9; }
-.ticker-item span { opacity: 0.6; margin-right: 0.4rem; }
-
-/* ── MAIN CONTENT ── */
-.main-wrap { padding: 0 2.5rem 2rem; }
-
-/* ── MODE TOGGLE ── */
-.mode-toggle {
-    display: flex;
-    gap: 0;
-    margin-bottom: 1.5rem;
-    border: 1px solid var(--border2);
-    border-radius: 3px;
-    overflow: hidden;
-    width: fit-content;
-}
-.mode-btn {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+.topbar-logo span { color: var(--accent); }
+.topbar-meta {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text3);
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    padding: 0.45rem 1.25rem;
-    background: var(--surface);
-    color: var(--muted);
-    border: none;
-    cursor: pointer;
 }
-.mode-btn.active {
-    background: var(--red);
-    color: #fff;
-}
-
-/* ── PANEL CARD ── */
-.panel {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    overflow: hidden;
-}
-.panel-header {
-    background: var(--surface2);
-    border-bottom: 1px solid var(--border);
-    padding: 0.6rem 1rem;
+.topbar-status {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--ok);
+    letter-spacing: 0.08em;
 }
-.panel-header-dot {
-    width: 8px; height: 8px;
-    background: var(--red);
+.topbar-dot {
+    width: 6px; height: 6px;
+    background: var(--ok);
     border-radius: 50%;
 }
+
+/* ── SUBBAR ── */
+.subbar {
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    padding: 0.4rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+}
+.subbar-item { display: flex; align-items: center; gap: 0.4rem; }
+.subbar-val { color: var(--text2); font-weight: 500; }
+
+/* ── MAIN WRAP ── */
+.main-wrap { padding: 0 1.5rem 2rem; }
+
+/* ── PANEL ── */
+.panel {
+    background: var(--bg2);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+}
+.panel-header {
+    background: var(--bg3);
+    border-bottom: 1px solid var(--line);
+    padding: 0.45rem 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.panel-header-left { display: flex; align-items: center; gap: 0.5rem; }
+.panel-header-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
 .panel-header-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    color: var(--text2);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--text3);
     text-transform: uppercase;
 }
-.panel-body { padding: 1.25rem; }
+.panel-header-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--accent);
+    background: var(--accent-dim);
+    border: 1px solid rgba(74,158,255,0.2);
+    padding: 0.1rem 0.4rem;
+    border-radius: 2px;
+    letter-spacing: 0.08em;
+}
 
-/* ── QB LIST ITEMS ── */
+/* ── QB LIST ── */
 .qb-row {
     display: flex;
     align-items: center;
-    padding: 0.65rem 0.75rem;
-    border-radius: 3px;
+    padding: 0.55rem 0.875rem;
+    border-bottom: 1px solid var(--line);
     cursor: pointer;
     transition: background 0.1s;
-    border-left: 3px solid transparent;
-    margin-bottom: 2px;
+    border-left: 2px solid transparent;
 }
-.qb-row:hover { background: var(--surface2); }
-.qb-row.active { background: var(--surface2); border-left-color: var(--red); }
+.qb-row:last-child { border-bottom: none; }
+.qb-row:hover { background: var(--bg3); }
+.qb-row.active { background: var(--bg3); border-left-color: var(--accent); }
 .qb-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--muted);
-    width: 1.5rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text3);
+    width: 1.4rem;
+    flex-shrink: 0;
 }
-.qb-info { flex: 1; }
+.qb-info { flex: 1; min-width: 0; }
 .qb-name-text {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1rem;
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+    font-size: 0.875rem;
     font-weight: 700;
-    letter-spacing: 0.03em;
     color: var(--text);
-    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
 }
-.qb-school {
-    font-size: 0.7rem;
-    color: var(--muted);
-    margin-top: 1px;
-}
+.qb-school { font-size: 0.65rem; color: var(--text3); margin-top: 1px; }
 .qb-grade {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--gold);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--warn);
+    flex-shrink: 0;
 }
 
-/* ── QB PROFILE HEADER ── */
+/* ── QB HERO HEADER ── */
 .qb-hero {
-    background: linear-gradient(135deg, var(--surface2) 0%, var(--surface3) 100%);
-    border-bottom: 1px solid var(--border);
-    padding: 1.25rem;
-    position: relative;
-    overflow: hidden;
-}
-.qb-hero::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--red), var(--blue));
+    background: var(--bg3);
+    border-bottom: 1px solid var(--line);
+    padding: 1rem 0.875rem 0.875rem;
 }
 .qb-hero-name {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 2rem;
-    font-weight: 800;
-    letter-spacing: 0.04em;
-    color: var(--text);
-    text-transform: uppercase;
-    line-height: 1;
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.02em;
+    line-height: 1.1;
 }
-.qb-hero-meta {
-    font-size: 0.75rem;
-    color: var(--text2);
-    margin-top: 0.3rem;
-}
+.qb-hero-meta { font-size: 0.72rem; color: var(--text2); margin-top: 0.25rem; }
 .qb-hero-rank {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--gold);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--accent);
     margin-top: 0.2rem;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
 }
 
 /* ── STAT GRID ── */
@@ -236,213 +209,235 @@ html, body, [class*="css"] {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1px;
-    background: var(--border);
-    margin-bottom: 1rem;
+    background: var(--line);
 }
 .stat-cell {
-    background: var(--surface);
-    padding: 0.75rem;
+    background: var(--bg2);
+    padding: 0.625rem 0.5rem;
     text-align: center;
 }
 .stat-cell .sv {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--white);
     line-height: 1;
 }
 .stat-cell .sl {
-    font-size: 0.62rem;
-    color: var(--muted);
+    font-size: 0.58rem;
+    color: var(--text3);
     text-transform: uppercase;
     letter-spacing: 0.08em;
     margin-top: 0.2rem;
 }
 
 /* ── ATTRIBUTE BARS ── */
-.attr-row { margin-bottom: 0.55rem; }
+.attr-row { padding: 0.3rem 0.875rem; border-bottom: 1px solid var(--line); }
+.attr-row:last-child { border-bottom: none; }
 .attr-header {
     display: flex;
     justify-content: space-between;
-    font-size: 0.68rem;
-    margin-bottom: 0.2rem;
+    align-items: center;
+    font-size: 0.65rem;
+    margin-bottom: 0.25rem;
 }
-.attr-label { color: var(--text2); font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; }
-.attr-val { font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+.attr-label {
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--text2);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 0.6rem;
+}
+.attr-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    font-size: 0.7rem;
+}
 .attr-track {
-    height: 4px;
-    background: var(--surface3);
-    border-radius: 2px;
+    height: 3px;
+    background: var(--bg4);
+    border-radius: 1px;
     overflow: hidden;
 }
-.attr-fill {
-    height: 100%;
-    border-radius: 2px;
-    transition: width 0.4s ease;
-}
+.attr-fill { height: 100%; border-radius: 1px; }
 
 /* ── TAGS ── */
-.tag-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.75rem; }
+.tag-section { padding: 0.625rem 0.875rem; border-bottom: 1px solid var(--line); }
+.tag-section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-bottom: 0.35rem;
+}
+.tag-row { display: flex; flex-wrap: wrap; gap: 0.3rem; }
 .tag {
-    font-size: 0.65rem;
-    font-weight: 600;
-    padding: 0.2rem 0.5rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.58rem;
+    font-weight: 500;
+    padding: 0.15rem 0.45rem;
     border-radius: 2px;
     letter-spacing: 0.04em;
     text-transform: uppercase;
 }
-.tag.strength { background: rgba(0,212,106,0.1); border: 1px solid rgba(0,212,106,0.25); color: var(--green); }
-.tag.weakness { background: rgba(217,43,43,0.1); border: 1px solid rgba(217,43,43,0.25); color: #ff6b6b; }
+.tag.strength { background: var(--ok-dim); border: 1px solid rgba(46,204,113,0.2); color: var(--ok); }
+.tag.weakness { background: var(--danger-dim); border: 1px solid rgba(231,76,60,0.2); color: var(--danger); }
 
-/* ── ARCHETYPE BANNER ── */
-.archetype-banner {
-    background: linear-gradient(90deg, var(--red) 0%, #8B1A1A 100%);
-    padding: 0.75rem 1.25rem;
-    margin-bottom: 1rem;
+/* ── ARCHETYPE ROW ── */
+.archetype-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background: var(--bg3);
+    border-bottom: 1px solid var(--line);
+    padding: 0.75rem 0.875rem;
 }
-.archetype-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    color: rgba(255,255,255,0.6);
+.archetype-left {}
+.archetype-kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    color: var(--text3);
     text-transform: uppercase;
-    letter-spacing: 0.15em;
+    margin-bottom: 0.2rem;
 }
 .archetype-name {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 800;
-    letter-spacing: 0.06em;
-    color: #fff;
-    text-transform: uppercase;
-}
-.archetype-comp {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--gold);
-    text-align: right;
-}
-.archetype-comp-label { color: rgba(255,255,255,0.4); font-size: 0.55rem; display: block; }
-
-/* ── BLUEPRINT SECTIONS ── */
-.section-header {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.6rem 1.25rem;
-    background: var(--surface2);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    margin-top: 1rem;
-}
-.section-num {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--red);
-    font-weight: 600;
-}
-.section-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.8rem;
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+    font-size: 1.1rem;
     font-weight: 700;
-    letter-spacing: 0.12em;
-    color: var(--text2);
+    color: var(--accent);
+    letter-spacing: 0.04em;
     text-transform: uppercase;
 }
+.archetype-right { text-align: right; }
+.archetype-comp-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.55rem;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.2rem;
+}
+.archetype-comp-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--warn);
+}
+
+/* ── PROFILE TEXT ── */
+.profile-text {
+    padding: 0.875rem;
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: var(--text2);
+    border-bottom: 1px solid var(--line);
+}
+
+/* ── TEAM INPUT ROW ── */
+.input-row { padding: 0.75rem 0; }
 
 /* ── GENERATE BUTTON ── */
 .stButton > button {
-    background: var(--red) !important;
-    color: #fff !important;
-    font-family: 'Barlow Condensed', sans-serif !important;
-    font-size: 1rem !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.12em !important;
+    background: var(--bg3) !important;
+    color: var(--accent) !important;
+    font-family: 'IBM Plex Mono', monospace !important;
+    font-size: 0.72rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.1em !important;
     text-transform: uppercase !important;
-    border: none !important;
-    border-radius: 3px !important;
-    padding: 0.7rem 2rem !important;
+    border: 1px solid var(--accent) !important;
+    border-radius: 2px !important;
+    padding: 0.6rem 1.5rem !important;
     width: 100% !important;
     transition: all 0.15s ease !important;
 }
-.stButton > button:hover { opacity: 0.88 !important; }
-.stButton > button:disabled { background: var(--surface3) !important; color: var(--muted) !important; }
+.stButton > button:hover {
+    background: var(--accent-dim) !important;
+}
+.stButton > button:disabled {
+    background: var(--bg3) !important;
+    color: var(--text3) !important;
+    border-color: var(--line) !important;
+}
 
 /* ── INPUT ── */
 .stTextInput > div > div > input {
-    background: var(--surface2) !important;
-    border: 1px solid var(--border2) !important;
+    background: var(--bg3) !important;
+    border: 1px solid var(--line2) !important;
     color: var(--text) !important;
-    border-radius: 3px !important;
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.875rem !important;
+    border-radius: 2px !important;
+    font-family: 'IBM Plex Sans', sans-serif !important;
+    font-size: 0.8rem !important;
 }
 .stTextInput > div > div > input:focus {
-    border-color: var(--red) !important;
-    box-shadow: 0 0 0 1px var(--red) !important;
+    border-color: var(--accent) !important;
+    box-shadow: none !important;
 }
-.stTextInput label { color: var(--text2) !important; font-size: 0.75rem !important; font-weight: 600 !important; letter-spacing: 0.05em !important; text-transform: uppercase !important; }
-
-/* ── RADIO (hide default, use custom) ── */
-.stRadio > div { display: none !important; }
+.stTextInput label {
+    color: var(--text3) !important;
+    font-family: 'IBM Plex Mono', monospace !important;
+    font-size: 0.6rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+}
 
 /* ── REPORT ── */
 .report-body {
-    padding: 1.25rem;
-    font-size: 0.875rem;
+    padding: 1rem 0.875rem;
+    font-size: 0.8rem;
     line-height: 1.75;
     color: var(--text2);
 }
 .report-body h3 {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    color: var(--red);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--accent);
     text-transform: uppercase;
     margin-top: 1.25rem;
     margin-bottom: 0.4rem;
     padding-bottom: 0.3rem;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--line);
 }
-.report-body ul { padding-left: 1.2rem; }
-.report-body li { margin-bottom: 0.4rem; color: var(--text2); }
-.report-body p { color: var(--text2); }
+.report-body ul { padding-left: 1.1rem; }
+.report-body li { margin-bottom: 0.35rem; color: var(--text2); }
+.report-body p { color: var(--text2); margin-bottom: 0.5rem; }
 .report-body strong { color: var(--text); }
 
 /* ── EMPTY STATE ── */
 .empty-state {
-    padding: 3rem 1.5rem;
+    padding: 2.5rem 1rem;
     text-align: center;
-    border: 1px dashed var(--border2);
-    border-radius: 4px;
-    margin: 1rem 0;
+    border: 1px dashed var(--line2);
+    border-radius: 3px;
+    margin: 0.5rem 0;
 }
-.empty-icon { font-size: 2rem; margin-bottom: 0.75rem; opacity: 0.4; }
 .empty-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--text3);
     text-transform: uppercase;
 }
-.empty-sub { font-size: 0.8rem; color: var(--muted); margin-top: 0.3rem; opacity: 0.7; }
+.empty-sub { font-size: 0.72rem; color: var(--text3); margin-top: 0.3rem; opacity: 0.6; }
 
 /* ── DIVIDER ── */
-.divider { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
+.divider { border: none; border-top: 1px solid var(--line); margin: 0.75rem 0; }
 
-/* ── STREAMLIT RADIO OVERRIDE for mode toggle ── */
+/* ── RADIO OVERRIDE ── */
 div[data-testid="stRadio"] > label { display: none !important; }
 div[data-testid="stRadio"] > div {
     display: flex !important;
     flex-direction: row !important;
     gap: 0 !important;
-    background: var(--surface2) !important;
-    border: 1px solid var(--border2) !important;
-    border-radius: 3px !important;
+    background: var(--bg3) !important;
+    border: 1px solid var(--line2) !important;
+    border-radius: 2px !important;
     overflow: hidden !important;
     width: fit-content !important;
     padding: 0 !important;
@@ -450,21 +445,21 @@ div[data-testid="stRadio"] > div {
 div[data-testid="stRadio"] > div > label {
     display: flex !important;
     align-items: center !important;
-    padding: 0.45rem 1.1rem !important;
-    font-family: 'Barlow Condensed', sans-serif !important;
-    font-size: 0.85rem !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.08em !important;
+    padding: 0.35rem 1rem !important;
+    font-family: 'IBM Plex Mono', monospace !important;
+    font-size: 0.65rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.1em !important;
     text-transform: uppercase !important;
     cursor: pointer !important;
     border-radius: 0 !important;
-    color: var(--muted) !important;
+    color: var(--text3) !important;
     transition: all 0.1s !important;
     margin: 0 !important;
 }
 div[data-testid="stRadio"] > div > label:has(input:checked) {
-    background: var(--red) !important;
-    color: #fff !important;
+    background: var(--accent-dim) !important;
+    color: var(--accent) !important;
 }
 div[data-testid="stRadio"] > div > label > div:first-child { display: none !important; }
 div[data-testid="stRadio"] > div > label > div { color: inherit !important; }
@@ -613,7 +608,7 @@ ARCHETYPE_SCORES = {
 
 
 def render_qb_profile(name, qb_data, scores_data):
-    """Render QB profile card with ESPN dashboard style."""
+    """Render QB profile card with war room dashboard style."""
     # Hero header
     st.markdown(f"""
     <div class="qb-hero">
@@ -626,7 +621,6 @@ def render_qb_profile(name, qb_data, scores_data):
     # Stat grid
     stats = qb_data.get('stats', {})
     items = list(stats.items())
-    # pad to multiple of 3
     while len(items) % 3 != 0:
         items.append(('', ''))
     grid_html = '<div class="stat-grid">'
@@ -639,24 +633,22 @@ def render_qb_profile(name, qb_data, scores_data):
     st.markdown(grid_html, unsafe_allow_html=True)
 
     # Strengths
-    st.markdown('<div style="font-size:0.65rem;font-weight:600;letter-spacing:0.1em;color:var(--text2);text-transform:uppercase;margin-bottom:0.4rem">Strengths</div>', unsafe_allow_html=True)
+    st.markdown('<div class="tag-section"><div class="tag-section-label">Strengths</div>', unsafe_allow_html=True)
     tags = "".join([f'<span class="tag strength">{s}</span>' for s in qb_data.get("strengths", [])])
-    st.markdown(f'<div class="tag-row">{tags}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="tag-row">{tags}</div></div>', unsafe_allow_html=True)
 
     # Concerns
-    st.markdown('<div style="font-size:0.65rem;font-weight:600;letter-spacing:0.1em;color:var(--text2);text-transform:uppercase;margin-bottom:0.4rem">Concerns</div>', unsafe_allow_html=True)
+    st.markdown('<div class="tag-section"><div class="tag-section-label">Concerns</div>', unsafe_allow_html=True)
     wtags = "".join([f'<span class="tag weakness">{w}</span>' for w in qb_data.get("weaknesses", [])])
-    st.markdown(f'<div class="tag-row">{wtags}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="tag-row">{wtags}</div></div>', unsafe_allow_html=True)
 
-    st.markdown('<hr class="divider">', unsafe_allow_html=True)
-
-    # Attribute bars with color coding
+    # Attribute bars
     attr_colors = {
-        "pocket_iq": "#1A6FD9",
-        "arm_talent": "#D92B2B",
-        "mobility": "#00D46A",
-        "game_mgmt": "#F0B429",
-        "deep_ball": "#FF6B35",
+        "pocket_iq": "#4A9EFF",
+        "arm_talent": "#F5A623",
+        "mobility": "#2ECC71",
+        "game_mgmt": "#A78BFA",
+        "deep_ball": "#F472B6",
     }
     attr_labels = {
         "pocket_iq": "Pocket IQ",
@@ -666,7 +658,7 @@ def render_qb_profile(name, qb_data, scores_data):
         "deep_ball": "Deep Ball",
     }
     for attr, val in scores_data.items():
-        color = attr_colors.get(attr, "#D92B2B")
+        color = attr_colors.get(attr, "#4A9EFF")
         label = attr_labels.get(attr, attr.replace("_"," ").title())
         st.markdown(f"""
         <div class="attr-row">
@@ -686,18 +678,21 @@ def render_qb_profile(name, qb_data, scores_data):
 # Top nav bar
 st.markdown("""
 <div class="topbar">
-    <div class="topbar-logo">QB<span>SCHEME</span>FIT</div>
-    <div style="display:flex;align-items:center;gap:1rem">
-        <span class="topbar-badge">2026 NFL Draft</span>
-        <span class="topbar-badge" style="color:var(--text2);background:var(--surface2);border-color:var(--border2)">Offensive Intelligence Engine</span>
+    <div style="display:flex;align-items:center;gap:1.5rem">
+        <div class="topbar-logo">QB<span>SCHEME</span>FIT</div>
+        <div class="topbar-meta">Offensive Intelligence System · v2.0</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:1.5rem">
+        <div class="topbar-meta">2026 NFL Draft · Pre-Draft Analysis Mode</div>
+        <div class="topbar-status"><div class="topbar-dot"></div>LIVE DATA</div>
     </div>
 </div>
-<div class="ticker">
-    <span class="ticker-item"><span>#</span>1 OVERALL — FERNANDO MENDOZA · INDIANA</span>
-    <span class="ticker-item"><span>#</span>2 QB — TY SIMPSON · ALABAMA</span>
-    <span class="ticker-item"><span>#</span>3 QB — GARRETT NUSSMEIER · LSU</span>
-    <span class="ticker-item"><span>#</span>4 QB — DREW ALLAR · PENN STATE</span>
-    <span class="ticker-item"><span>#</span>5 QB — CARSON BECK · MIAMI</span>
+<div class="subbar">
+    <div class="subbar-item">DRAFT CLASS <span class="subbar-val">2026</span></div>
+    <div class="subbar-item">QBs EVALUATED <span class="subbar-val">5</span></div>
+    <div class="subbar-item">TOP PROSPECT <span class="subbar-val">F. MENDOZA · IND</span></div>
+    <div class="subbar-item">DRAFT DATE <span class="subbar-val">APR 23, 2026 · PITTSBURGH</span></div>
+    <div class="subbar-item">MODE <span class="subbar-val">SCHEME FIT ANALYSIS</span></div>
 </div>
 <div class="main-wrap">
 """, unsafe_allow_html=True)
@@ -847,17 +842,23 @@ with col_right:
         profile_text = qb_profile.get('profile', '').strip()
         comp = qb_profile.get('comp', '—')
         st.markdown(f"""
-        <div class="archetype-banner">
-            <div>
-                <div class="archetype-label">Classified Archetype</div>
-                <div class="archetype-name">{archetype}</div>
+        <div class="panel">
+            <div class="panel-header">
+                <div class="panel-header-left"><div class="panel-header-dot"></div><div class="panel-header-title">Prospect Analysis</div></div>
+                <div class="panel-header-tag">AI CLASSIFIED</div>
             </div>
-            <div class="archetype-comp">
-                <span class="archetype-comp-label">NFL Comp</span>
-                {comp}
+            <div class="archetype-row">
+                <div class="archetype-left">
+                    <div class="archetype-kicker">Offensive Archetype</div>
+                    <div class="archetype-name">{archetype}</div>
+                </div>
+                <div class="archetype-right">
+                    <div class="archetype-comp-label">Closest NFL Comp</div>
+                    <div class="archetype-comp-val">{comp}</div>
+                </div>
             </div>
+            <div class="profile-text">{profile_text}</div>
         </div>
-        <div style="font-size:0.85rem;color:var(--text2);line-height:1.7;margin-bottom:1.25rem;padding:0 0.25rem">{profile_text}</div>
         """, unsafe_allow_html=True)
     else:
         st.markdown("""
